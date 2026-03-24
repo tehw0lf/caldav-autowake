@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+  "name": "CalDAV Auto-Wake",
+  "description": "Automatically syncs and re-enables disabled CalDAV calendars after Thunderbird goes back online.",
+  "version": "1.0.0",
+  "author": "tehw0lf",
+  "homepage_url": "https://github.com/tehw0lf/caldav-autowake",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "caldav-autowake@tehw0lf",
+      "strict_min_version": "102.0",
+      "strict_max_version": "148.*"
+    }
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "experiment_apis": {
+    "calendarManager": {
+      "schema": "experiments/schema.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "paths": [["calendarManager"]],
+        "script": "experiments/implementation.js"
+      }
+    }
+  },
+  "permissions": ["notifications"]
+}

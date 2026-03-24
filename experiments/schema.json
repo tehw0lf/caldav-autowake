@@ -1,0 +1,24 @@
+[
+  {
+    "namespace": "calendarManager",
+    "description": "Provides access to Thunderbird's internal calendar manager for CalDAV auto-wake.",
+    "types": [],
+    "functions": [
+      {
+        "name": "syncAndEnableCalDAVCalendars",
+        "type": "function",
+        "description": "Finds all disabled CalDAV calendars with a remote URL, refreshes them, and enables them after successful sync.",
+        "async": true,
+        "parameters": []
+      }
+    ],
+    "events": [
+      {
+        "name": "onOnlineStateRestored",
+        "type": "function",
+        "description": "Fired when Thunderbird transitions from offline to online.",
+        "parameters": []
+      }
+    ]
+  }
+]
