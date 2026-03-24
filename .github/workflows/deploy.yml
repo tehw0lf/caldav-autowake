@@ -1,0 +1,25 @@
+name: zip and publish
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    name: external workflow
+    uses: tehw0lf/workflows/.github/workflows/build-test-publish.yml@main
+    permissions:
+      id-token: write
+      actions: write
+      attestations: write
+      contents: write
+      packages: write
+      security-events: write
+    with:
+      addon_guid: "caldav-autowake@tehw0lf"
+      xpi_path: "caldav-autowake.xpi"
+    secrets:
+      AMO_API_KEY: ${{ secrets.AMO_API_KEY }}
+      AMO_API_SECRET: ${{ secrets.AMO_API_SECRET }}
