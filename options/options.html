@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CalDAV Auto-Wake Settings</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 1em;
+        max-width: 480px;
+      }
+      label {
+        display: block;
+        margin-bottom: 0.4em;
+        font-weight: bold;
+      }
+      textarea {
+        width: 100%;
+        height: 8em;
+        resize: vertical;
+        font-family: monospace;
+        font-size: 0.9em;
+        box-sizing: border-box;
+      }
+      .hint {
+        font-size: 0.8em;
+        color: #555;
+        margin-top: 0.3em;
+      }
+      button {
+        margin-top: 0.8em;
+        padding: 0.4em 1.2em;
+      }
+      #status {
+        margin-top: 0.5em;
+        font-size: 0.85em;
+        color: green;
+        min-height: 1.2em;
+      }
+    </style>
+  </head>
+  <body>
+    <label for="excludeList">Exclude calendars from auto-wake:</label>
+    <textarea id="excludeList" placeholder="Nextcloud*&#10;My Private Calendar"></textarea>
+    <p class="hint">
+      One calendar name per line. Matching is case-insensitive.<br />
+      A trailing <code>*</code> matches any suffix
+      (e.g. <code>Nextcloud*</code> matches <code>Nextcloud Calendar</code>).
+    </p>
+    <button id="save">Save</button>
+    <div id="status"></div>
+    <script src="options.js"></script>
+  </body>
+</html>

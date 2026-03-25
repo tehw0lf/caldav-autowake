@@ -26,7 +26,12 @@ async function doSyncAndEnable() {
   debugNotify("Online detected", "Starting CalDAV sync…");
 
   try {
-    const result = await browser.calendarManager.syncAndEnableCalDAVCalendars();
+    const { excludePatterns = [] } = await browser.storage.local.get(
+      "excludePatterns",
+    );
+    const result = await browser.calendarManager.syncAndEnableCalDAVCalendars(
+      excludePatterns,
+    );
 
     if (result.synced === 0 && result.skipped === 0) {
       debugNotify("Nothing to do", "No disabled CalDAV calendars found.");
@@ -44,7 +49,7 @@ async function doSyncAndEnable() {
     );
   } catch (err) {
     debugNotify("Error", String(err));
-    console.error(`[${EXTENSION_NAME}]`, err);
+    console.error(`[${EXTENSION_NAME}] ${String(err)}`);
   }
 }
 

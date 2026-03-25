@@ -96,6 +96,24 @@ function refreshCalendar(cal) {
   });
 }
 
+// Returns true if calName matches any pattern in excludePatterns.
+// Matching is case-insensitive. A trailing '*' is treated as a prefix wildcard;
+// all other characters are literals.
+function isExcluded(calName, excludePatterns) {
+  if (!excludePatterns || excludePatterns.length === 0) return false;
+  const name = (calName || "").toLowerCase();
+  for (const rawPattern of excludePatterns) {
+    const pattern = (rawPattern || "").trim();
+    if (!pattern) continue;
+    if (pattern.endsWith("*")) {
+      if (name.startsWith(pattern.slice(0, -1).toLowerCase())) return true;
+    } else {
+      if (name === pattern.toLowerCase()) return true;
+    }
+  }
+  return false;
+}
+
 // ---------------------------------------------------------------------------
 // Main Experiment class
 // ---------------------------------------------------------------------------
@@ -107,7 +125,7 @@ var calendarManager = class extends ExtensionCommon.ExtensionAPI {
         // ----------------------------------------------------------------
         // Function: syncAndEnableCalDAVCalendars
         // ----------------------------------------------------------------
-        async syncAndEnableCalDAVCalendars() {
+        async syncAndEnableCalDAVCalendars(excludePatterns) {
           const mgr = getCalManager();
           const allCalendars = mgr.getCalendars({});
 
@@ -129,6 +147,11 @@ var calendarManager = class extends ExtensionCommon.ExtensionAPI {
 
           for (const cal of targets) {
             const calName = cal.name || cal.id;
+
+            // Skip calendars on the user-configured exclude list.
+            if (isExcluded(calName, excludePatterns)) {
+              continue;
+            }
 
             // Step 1: Refresh while still disabled.
             //         TB executes cal.refresh() on disabled calendars

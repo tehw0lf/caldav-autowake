@@ -8,6 +8,11 @@ Thunderbird has a known bug where remote CalDAV calendars get silently disabled 
 
 The correct recovery order matters: **sync first, then enable** — enabling before a successful sync causes Thunderbird to immediately disable the calendar again.
 
+Related upstream bugs:
+- [Bug 1439379](https://bugzilla.mozilla.org/show_bug.cgi?id=1439379) — Online calendars get silently disabled on network errors
+- [Bug 1694709](https://bugzilla.mozilla.org/show_bug.cgi?id=1694709) — CalDAV calendars stop showing events after offline/online transitions
+- [Bug 1713625](https://bugzilla.mozilla.org/show_bug.cgi?id=1713625) — CalDAV offline support not working correctly after reconnect
+
 ## What It Does
 
 - Listens for Thunderbird's offline → online transition and automatically syncs all disabled CalDAV calendars
@@ -15,6 +20,17 @@ The correct recovery order matters: **sync first, then enable** — enabling bef
 - Also runs a check 8 seconds after startup as a fallback, in case the online transition happened before the extension finished loading
 - Never touches the read-only setting of any calendar
 - Runs silently in the background
+
+## Configuration
+
+Open **Add-ons Manager → CalDAV Auto-Wake → Preferences** to configure an exclude list: calendars whose names match a pattern will be left disabled and never touched by the extension.
+
+Each line is one pattern. Matching is case-insensitive. A trailing `*` acts as a prefix wildcard:
+
+```
+My Private Calendar
+Nextcloud*
+```
 
 ## Installation
 

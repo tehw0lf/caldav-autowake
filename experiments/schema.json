@@ -9,7 +9,14 @@
         "type": "function",
         "description": "Finds all disabled CalDAV calendars with a remote URL, refreshes them, and enables them after successful sync.",
         "async": true,
-        "parameters": []
+        "parameters": [
+          {
+            "name": "excludePatterns",
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Calendar name patterns to exclude. Case-insensitive prefix match, optional trailing wildcard (e.g. 'Nextcloud*')."
+          }
+        ]
       }
     ],
     "events": [
