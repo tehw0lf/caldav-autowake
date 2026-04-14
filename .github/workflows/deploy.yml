@@ -17,6 +17,7 @@ jobs:
       contents: write
       packages: write
       security-events: write
+      pull-requests: write
     with:
       addon_guid: "caldav-autowake@tehw0lf"
       xpi_path: "caldav-autowake.xpi"
