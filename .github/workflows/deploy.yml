@@ -19,8 +19,8 @@ jobs:
       security-events: write
       pull-requests: write
     with:
-      addon_guid: "caldav-autowake@tehw0lf"
       xpi_path: "caldav-autowake.xpi"
+      addon_api_url_prefix: "https://addons.thunderbird.net/api/v4"
     secrets:
-      AMO_API_KEY: ${{ secrets.AMO_API_KEY }}
-      AMO_API_SECRET: ${{ secrets.AMO_API_SECRET }}
+      ADDON_API_KEY: ${{ secrets.ATN_API_KEY }}
+      ADDON_API_SECRET: ${{ secrets.ATN_API_SECRET }}
