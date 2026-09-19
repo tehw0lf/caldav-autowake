@@ -61,4 +61,4 @@ experiments/implementation.js    ← Runs in Thunderbird's chrome process with X
 
 ## CI/CD
 
-On push to `main`, GitHub Actions zips the extension and publishes to addons.thunderbird.net (AMO) via the reusable workflow at `tehw0lf/workflows`. Requires `AMO_API_KEY` and `AMO_API_SECRET` secrets.
+On push to `main`, GitHub Actions zips the extension and publishes to addons.thunderbird.net (ATN) via the reusable workflow at `tehw0lf/workflows`. Requires `ATN_API_KEY` and `ATN_API_SECRET` secrets, which `deploy.yml` passes on as the workflow's `ADDON_API_KEY` and `ADDON_API_SECRET`.
