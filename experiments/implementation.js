@@ -11,12 +11,15 @@ var { ExtensionCommon } = ChromeUtils.importESModule(
   "resource://gre/modules/ExtensionCommon.sys.mjs",
 );
 
-// calICalendarManager is exposed via the service manager.
-// Type IDs are stable across TB 102+.
-const CAL_MANAGER_CID = "@mozilla.org/calendar/manager;1";
-
+// Newer Thunderbird versions no longer register the calendar manager as an
+// XPCOM service: Cc["@mozilla.org/calendar/manager;1"].getService() fails with
+// "... is not a constructor". The manager is an ESM singleton, reachable via
+// the calendar utils module.
 function getCalManager() {
-  return Cc[CAL_MANAGER_CID].getService(Ci.calICalendarManager);
+  const { cal } = ChromeUtils.importESModule(
+    "resource:///modules/calendar/calUtils.sys.mjs",
+  );
+  return cal.manager;
 }
 
 // A CalDAV calendar has type "caldav" in TB's internal registry.
@@ -70,6 +73,9 @@ function refreshCalendar(cal) {
     );
 
     const observer = {
+      // Newer Thunderbird versions call item.QueryInterface(calIObserver) in
+      // addObserver(); a plain object without QI throws there.
+      QueryInterface: ChromeUtils.generateQI(["calIObserver"]),
       onLoad(_calendar) {
         finish(true);
       },
@@ -127,7 +133,7 @@ var calendarManager = class extends ExtensionCommon.ExtensionAPI {
         // ----------------------------------------------------------------
         async syncAndEnableCalDAVCalendars(excludePatterns) {
           const mgr = getCalManager();
-          const allCalendars = mgr.getCalendars({});
+          const allCalendars = mgr.getCalendars();
 
           // Find CalDAV calendars that are currently disabled.
           const targets = allCalendars.filter((cal) => {

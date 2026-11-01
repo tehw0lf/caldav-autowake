@@ -38,7 +38,7 @@ Install directly from [addons.thunderbird.net](https://addons.thunderbird.net).
 
 ## Compatibility
 
-Requires Thunderbird 102 or later.
+Requires Thunderbird 128 or later (tested up to 158). The extension uses Thunderbird's internal calendar modules, which are only available as ES modules from version 128 on, and Thunderbird's extension rules require an upper version bound for extensions with Experiment APIs, so it is raised after checking each new Thunderbird release.
 
 ## Development
 
